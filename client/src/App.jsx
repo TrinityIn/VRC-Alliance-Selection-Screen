@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import Remote from "./components/Remote";
 import "./App.css";
 
 function App() {
@@ -30,16 +30,11 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="flex-grow h-screen bg-red-700 flex">
-        <input
-          type="text"
-          className="bg-gray-900 text-white h-[200px] flex-grow placeholder:'Robot Name'"
-          onChange={(e) => setSelectedRobot(e.target.value)}
-          placeholder="Robot Name"
+      <div className="w-[300px] h-screen bg-red-700 flex overflow-hidden">
+        <Remote
+          setAnimateRobot={setAnimateRobot}
+          setSelectedRobot={setSelectedRobot}
         />
-        <button onClick={() => setAnimateRobot(!animateRobot)}>
-          {animateRobot ? "Stop" : "Start"}
-        </button>
       </div>
     </div>
   );
