@@ -2,8 +2,35 @@ import React, { useContext } from "react";
 import RobotContext from "../RobotContext";
 
 const Remote = () => {
-  const { setAnimateRobot, setSelectedRobot, teams, selectedRobot, setTeams } =
-    useContext(RobotContext);
+  const {
+    setAnimateRobot,
+    setSelectedRobot,
+    teams,
+    selectedRobot,
+    setTeams,
+    seeds,
+    setSeeds,
+  } = useContext(RobotContext);
+
+  const handleStart = () => {
+    if (teams && seeds) {
+      const newSeeds = seeds.map((seed) => {
+        if (seed.id === 1) {
+          removeTeam(0);
+          alert("ROBOT");
+          return { ...seed, firstTeam: "ROBOT" };
+        }
+        return team;
+      });
+      setSeeds(newSeeds);
+    }
+  };
+
+  const removeTeam = (index) => {
+    const newTeams = [...teams];
+    newTeams.splice(index, 1); // Remove the item from the copied array
+    setTeams(newTeams); // Set the new array as the new state
+  };
 
   const handleAccept = () => {
     const index = teams.findIndex(
@@ -12,9 +39,7 @@ const Remote = () => {
 
     if (index > -1) {
       if (!teams[index].cannotCaptain) {
-        const newTeams = [...teams];
-        newTeams.splice(index, 1); // Remove the item from the copied array
-        setTeams(newTeams); // Set the new array as the new state
+        removeTeam(index);
         alert("success! removed " + selectedRobot);
       } else {
         alert("failed: " + selectedRobot);
@@ -89,8 +114,11 @@ const Remote = () => {
           >
             Decline
           </button>
-          <button className="bg-red-500 text-white p-2 rounded hover:bg-red-700">
-            back
+          <button
+            onClick={handleStart}
+            className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+          >
+            Start
           </button>
         </div>
       </div>

@@ -8,6 +8,7 @@ function App() {
   const [animateRobot, setAnimateRobot] = useState(false);
   const [selectedRobot, setSelectedRobot] = useState("210Y");
   const [teamComponent, setTeamComponent] = useState([]);
+  const [seeds, setSeeds] = useState([]);
 
   // Todo: get teams using robotevents api
   const [teams, setTeams] = useState([]);
@@ -342,6 +343,8 @@ function App() {
         setSelectedRobot,
         teams,
         setTeams,
+        seeds,
+        setSeeds,
       }}
     >
       <div className="w-full h-screen items-center flex">
