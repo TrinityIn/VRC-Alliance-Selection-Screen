@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Remote from "./components/Remote";
 import "./App.css";
+import RobotContext from "./RobotContext"; // Adjust the path as needed
 
 function App() {
   const [animateRobot, setAnimateRobot] = useState(false);
   const [selectedRobot, setSelectedRobot] = useState("210Y");
+  const [teamComponent, setTeamComponent] = useState([]);
 
   // Todo: get teams using robotevents api
   const [teams, setTeams] = useState([]);
@@ -315,50 +317,60 @@ function App() {
     setTeams(teamList);
   }, []);
 
-  const teamComponent = teams.map((team) => {
-    let id = 0;
-    return (
+  useEffect(() => {
+    const updatedTeamComponent = teams.map((team) => (
       <div key={team.number}>
         <h1 className="text-white text-3xl py-3 px-3">{team.number}</h1>
       </div>
-    );
-  });
+    ));
+    setTeamComponent(updatedTeamComponent);
+  }, [teams]);
 
   return (
-    <div className="w-full h-screen items-center flex">
-      <div className="h-[1080px] w-[1920px] flex bg-black flex-row ">
-        <div className="w-1/2 bg-gray-400 flex flex-row">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-        <div className="w-1/2 flex flex-col items-center ">
-          <div className="w-4/5 bg-green-500 rounded-3xl h-[400px] my-10 "></div>
-          <div
-            className={`w-4/5 bg-gray-900 border border-white rounded-lg h-[550px] ${
-              animateRobot ? "hidden" : ""
-            } overflow-hidden`}
-          >
-            <div className="flex flex-row flex-wrap py-3 px-3 overflow-hidden">
-              {teamComponent}
+    <RobotContext.Provider
+      value={{
+        animateRobot,
+        setAnimateRobot,
+        selectedRobot,
+        setSelectedRobot,
+        teams,
+        setTeams,
+      }}
+    >
+      <div className="w-full h-screen items-center flex">
+        <div className="h-[1080px] w-[1920px] flex bg-black flex-row ">
+          <div className="w-1/2 bg-gray-400 flex flex-row">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div className="w-1/2 flex flex-col items-center ">
+            <div className="w-4/5 bg-green-500 rounded-3xl h-[400px] my-10 "></div>
+            <div
+              className={`w-4/5 bg-gray-900 border border-white rounded-lg h-[550px] ${
+                animateRobot ? "hidden" : ""
+              } overflow-hidden`}
+            >
+              <div className="flex flex-row flex-wrap py-3 px-3 overflow-hidden">
+                {teamComponent}
+              </div>
+            </div>
+            <div
+              className={`w-4/5 bg-green-500 border border-white rounded-lg h-[550px] ${
+                animateRobot ? "" : "hidden"
+              } flex items-end justify-center`}
+            >
+              <h1 className="text-white text-6xl font-black">
+                {selectedRobot}
+              </h1>
             </div>
           </div>
-          <div
-            className={`w-4/5 bg-green-500 border border-white rounded-lg h-[550px] ${
-              animateRobot ? "" : "hidden"
-            } flex items-end justify-center`}
-          >
-            <h1 className="text-white text-6xl font-black">{selectedRobot}</h1>
-          </div>
+        </div>
+        <div className="w-[300px] h-screen bg-red-700 flex overflow-hidden">
+          <Remote />
         </div>
       </div>
-      <div className="w-[300px] h-screen bg-red-700 flex overflow-hidden">
-        <Remote
-          setAnimateRobot={setAnimateRobot}
-          setSelectedRobot={setSelectedRobot}
-        />
-      </div>
-    </div>
+    </RobotContext.Provider>
   );
 }
 
