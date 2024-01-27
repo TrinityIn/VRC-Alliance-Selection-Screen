@@ -1,10 +1,328 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Remote from "./components/Remote";
 import "./App.css";
 
 function App() {
-  const [animateRobot, setAnimateRobot] = useState(true);
+  const [animateRobot, setAnimateRobot] = useState(false);
   const [selectedRobot, setSelectedRobot] = useState("210Y");
+
+  // Todo: get teams using robotevents api
+  const [teams, setTeams] = useState([]);
+  const teamList = [
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10N",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210B",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10C",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+    {
+      number: "10B",
+      teamName: "Exothermic Blaze",
+      organization: "Exothermic Robotics",
+      location: "Redmond, Washington, United States",
+    },
+    {
+      number: "210F",
+      teamName: "Ok I Pull Up",
+      organization: "Western Mechatronics",
+      location: "Calgary, Alberta, Canada",
+    },
+  ];
+
+  useEffect(() => {
+    setTeams(teamList);
+  }, []);
+
+  const teamComponent = teams.map((team) => {
+    let id = 0;
+    return (
+      <div key={team.number}>
+        <h1 className="text-white text-3xl py-3 px-3">{team.number}</h1>
+      </div>
+    );
+  });
 
   return (
     <div className="w-full h-screen items-center flex">
@@ -19,8 +337,12 @@ function App() {
           <div
             className={`w-4/5 bg-gray-900 border border-white rounded-lg h-[550px] ${
               animateRobot ? "hidden" : ""
-            }`}
-          ></div>
+            } overflow-hidden`}
+          >
+            <div className="flex flex-row flex-wrap py-3 px-3 overflow-hidden">
+              {teamComponent}
+            </div>
+          </div>
           <div
             className={`w-4/5 bg-green-500 border border-white rounded-lg h-[550px] ${
               animateRobot ? "" : "hidden"
