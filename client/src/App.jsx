@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import Remote from "./components/Remote";
 import "./App.css";
 import RobotContext from "./RobotContext"; // Adjust the path as needed
+import Bracket from "./components/Bracket";
 
 function App() {
   const [animateRobot, setAnimateRobot] = useState(false);
@@ -320,7 +321,13 @@ function App() {
   useEffect(() => {
     const updatedTeamComponent = teams.map((team) => (
       <div key={team.number}>
-        <h1 className="text-white text-3xl py-3 px-3">{team.number}</h1>
+        <h1
+          className={`${
+            team.cannotCaptain ? "text-red-500" : "text-white"
+          } text-3xl py-3 px-3`}
+        >
+          {team.number}
+        </h1>
       </div>
     ));
     setTeamComponent(updatedTeamComponent);
@@ -340,9 +347,7 @@ function App() {
       <div className="w-full h-screen items-center flex">
         <div className="h-[1080px] w-[1920px] flex bg-black flex-row ">
           <div className="w-1/2 bg-gray-400 flex flex-row">
-            <div></div>
-            <div></div>
-            <div></div>
+            <Bracket />
           </div>
           <div className="w-1/2 flex flex-col items-center ">
             <div className="w-4/5 bg-green-500 rounded-3xl h-[400px] my-10 "></div>
