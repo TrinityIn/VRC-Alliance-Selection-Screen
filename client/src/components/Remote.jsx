@@ -9,13 +9,16 @@ const Remote = () => {
     const index = teams.findIndex(
       (item) => item.number === selectedRobot.toUpperCase()
     );
+
     if (index > -1) {
-      const newTeams = [...teams];
-      newTeams.splice(index, 1); // Remove the item from the copied array
-      setTeams(newTeams); // Set the new array as the new state
-      alert("success! removed " + selectedRobot);
-    } else {
-      alert("failed: " + selectedRobot);
+      if (!teams[index].cannotCaptain) {
+        const newTeams = [...teams];
+        newTeams.splice(index, 1); // Remove the item from the copied array
+        setTeams(newTeams); // Set the new array as the new state
+        alert("success! removed " + selectedRobot);
+      } else {
+        alert("failed: " + selectedRobot);
+      }
     }
   };
 
