@@ -56,7 +56,7 @@ function App() {
       <div key={team.number}>
         <h1
           className={`${
-            team.cannotCaptain ? "text-red-500" : "text-white"
+            team.cannotAccept ? "text-red-500" : "text-white"
           } text-3xl py-3 px-3`}
         >
           {team.number}

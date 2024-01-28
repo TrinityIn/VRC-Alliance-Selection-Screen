@@ -14,16 +14,29 @@ const Remote = () => {
 
   const [currentSeed, setCurrentSeed] = useState(1);
 
-  const newCaptain = () => {
-    const newSeeds = seeds.map((seed) => {
-      if (seed.key === currentSeed && seed.firstTeam === "") {
-        return { ...seed, firstTeam: teams[0].number };
+  const checkIfNewCaptain = () => {
+    for (let i = 0; i < seeds.length; i++) {
+      if (seeds[i].key < currentSeed && seeds[i].secondTeam === "") {
+        return false;
       }
-      return seed;
-    });
-    removeTeam(0);
-    setSeeds(newSeeds);
-    setCurrentSeed((prevSeed) => prevSeed + 1);
+    }
+    return true;
+  };
+
+  const newCaptain = () => {
+    if (checkIfNewCaptain()) {
+      const newSeeds = seeds.map((seed) => {
+        if (seed.key === currentSeed && seed.firstTeam === "") {
+          return { ...seed, firstTeam: teams[0].number };
+        }
+        return seed;
+      });
+      removeTeam(0);
+      setSeeds(newSeeds);
+      setCurrentSeed((prevSeed) => prevSeed + 1);
+    } else {
+      alert("cannot new captain");
+    }
   };
 
   const addTeamToSeed = (team) => {
@@ -51,7 +64,7 @@ const Remote = () => {
     );
 
     if (index > -1) {
-      if (!teams[index].cannotCaptain) {
+      if (!teams[index].cannotAccept) {
         setAnimateRobot(false);
         addTeamToSeed(teams[index].number);
         removeTeam(index);
@@ -68,7 +81,7 @@ const Remote = () => {
     if (index > -1) {
       const newTeams = teams.map((team) => {
         if (team.number === selectedRobot.toUpperCase()) {
-          return { ...team, cannotCaptain: true };
+          return { ...team, cannotAccept: true };
         }
         return team;
       });

@@ -33,7 +33,7 @@ function Bracket() {
         <div className="flex items-center justify-center bg-white w-[30px] text-xl text-black rounded-sm">
           {seed.key}
         </div>
-        <div className="flex   bg-red-500 rounded-lg flex-col w-full justify-center items-center">
+        <div className="flex   bg-red-500 rounded-lg flex-col w-full justify-center items-center h-[90px]">
           <h1 className="text-white text-3xl">{seed.firstTeam}</h1>
           <h1 className="text-white text-3xl">{seed.secondTeam}</h1>
         </div>
@@ -48,7 +48,7 @@ function Bracket() {
           <div className="flex items-center justify-center bg-white w-[30px] text-xl text-black rounded-sm">
             {seed.key}
           </div>
-          <div className="flex   bg-blue-500 rounded-lg flex-col w-full justify-center items-center">
+          <div className="flex   bg-blue-500 rounded-lg flex-col w-full justify-center items-center  h-[90px]">
             <h1 className="text-white text-3xl">{seed.firstTeam}</h1>
             <h1 className="text-white text-3xl">{seed.secondTeam}</h1>
           </div>
