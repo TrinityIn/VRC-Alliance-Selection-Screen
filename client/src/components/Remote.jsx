@@ -10,6 +10,7 @@ const Remote = () => {
     setTeams,
     seeds,
     setSeeds,
+    videoFound,
   } = useContext(RobotContext);
 
   const [currentSeed, setCurrentSeed] = useState(1);
@@ -119,7 +120,9 @@ const Remote = () => {
         <div className="flex justify-between flex-wrap">
           <button
             onClick={() => setAnimateRobot(true)}
-            className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+            className={`${
+              videoFound ? "bg-green-500" : "bg-red-500"
+            } text-white p-2 rounded hover:bg-red-700`}
           >
             Show {selectedRobot}'s robot
           </button>

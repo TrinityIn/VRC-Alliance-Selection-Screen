@@ -6,9 +6,15 @@ import Bracket from "./components/Bracket";
 
 function App() {
   const [animateRobot, setAnimateRobot] = useState(false);
-  const [selectedRobot, setSelectedRobot] = useState("210F");
+  const [selectedRobot, setSelectedRobot] = useState("210");
   const [teamComponent, setTeamComponent] = useState([]);
   const [seeds, setSeeds] = useState([]);
+  const [videoFound, setVideoFound] = useState(false);
+
+  useEffect(() => {
+    const videoExists = teams.some((team) => team.number === selectedRobot);
+    setVideoFound(videoExists);
+  }, [selectedRobot]);
 
   // Todo: get teams using robotevents api
   const teamList = [
@@ -77,6 +83,7 @@ function App() {
         setTeams,
         seeds,
         setSeeds,
+        videoFound,
       }}
     >
       <div className="w-full h-screen items-center flex">
