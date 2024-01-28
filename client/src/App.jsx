@@ -6,7 +6,7 @@ import Bracket from "./components/Bracket";
 
 function App() {
   const [animateRobot, setAnimateRobot] = useState(false);
-  const [selectedRobot, setSelectedRobot] = useState("210Y");
+  const [selectedRobot, setSelectedRobot] = useState("210F");
   const [teamComponent, setTeamComponent] = useState([]);
   const [seeds, setSeeds] = useState([]);
 
@@ -96,11 +96,21 @@ function App() {
               </div>
             </div>
             <div
-              className={`w-4/5 bg-green-500 border border-white rounded-lg h-[550px] ${
+              className={`w-4/5 bg-black border border-white rounded-lg h-[550px] ${
                 animateRobot ? "" : "hidden"
-              } flex items-end justify-center`}
+              } flex justify-center flex-col items-center overflow-hidden`}
             >
-              <h1 className="text-white text-6xl font-black">
+              <video
+                key={selectedRobot}
+                loop
+                muted
+                autoPlay
+                className={`${animateRobot ? "" : "hidden"} w-full`}
+              >
+                <source src={`/vid/${selectedRobot}.mp4`} type="video/mp4" />
+              </video>
+
+              <h1 className="text-white text-6xl font-black -mt-[50px]">
                 {selectedRobot}
               </h1>
             </div>
