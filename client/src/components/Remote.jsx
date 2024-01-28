@@ -14,6 +14,22 @@ const Remote = () => {
   } = useContext(RobotContext);
 
   const [currentSeed, setCurrentSeed] = useState(1);
+  const [requestedTeam, setRequestedTeam] = useState(false);
+
+  const canSelect = (team) => {
+    const index = teams.findIndex((item) => item.number === team.toUpperCase());
+
+    if (index > -1) {
+      if (teams[index].cannotAccept) {
+        return false;
+      }
+      return true;
+    }
+  };
+
+  const handleRequest = () => {
+    setRequestedTeam(true);
+  };
 
   const checkIfNewCaptain = () => {
     for (let i = 0; i < seeds.length; i++) {
@@ -36,7 +52,7 @@ const Remote = () => {
       setSeeds(newSeeds);
       setCurrentSeed((prevSeed) => prevSeed + 1);
     } else {
-      alert("cannot new captain");
+      // alert("cannot new captain");
     }
   };
 
@@ -72,6 +88,7 @@ const Remote = () => {
       } else {
         alert("failed: " + selectedRobot);
       }
+      setRequestedTeam(false);
     }
   };
 
@@ -91,6 +108,7 @@ const Remote = () => {
     } else {
       alert("failed: " + selectedRobot);
     }
+    setRequestedTeam(false);
   };
 
   return (
@@ -106,23 +124,14 @@ const Remote = () => {
               setSelectedRobot(e.target.value);
             }}
           />
-          <input
-            type="text"
-            className="w-full p-2 border-2 border-black mb-2"
-            placeholder="Input 1"
-          />
-          <input
-            type="text"
-            className="w-full p-2 border-2 border-black mb-2"
-            placeholder="Input 3"
-          />
         </div>
-        <div className="flex justify-between flex-wrap">
+        <div className="flex flex-col justify-evenly pt-5 space-y-3">
           <button
             onClick={() => setAnimateRobot(true)}
             className={`${
               videoFound ? "bg-green-500" : "bg-red-500"
             } text-white p-2 rounded hover:bg-red-700`}
+            disabled={!videoFound}
           >
             Show {selectedRobot}'s robot
           </button>
@@ -132,25 +141,42 @@ const Remote = () => {
           >
             Stop Showing Robot
           </button>
+
           <button
-            onClick={handleAccept}
-            className="bg-green-500 text-white p-2 rounded hover:bg-red-700"
+            onClick={handleRequest}
+            className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700"
+            disabled={!videoFound || !canSelect(selectedRobot)}
           >
-            Accept
+            Request {selectedRobot}
           </button>
-          <button
-            onClick={handleDecline}
-            className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
-          >
-            Decline
-          </button>
+
           <button
             onClick={newCaptain}
-            className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+            className="bg-gray-500 text-white p-2 rounded hover:bg-gray-700"
+            disabled={!checkIfNewCaptain()}
           >
             New Captain
           </button>
         </div>
+      </div>
+
+      <div
+        className={`bg-black flex flex-row w-full justify-evenly ${
+          requestedTeam ? "" : "hidden"
+        }`}
+      >
+        <button
+          onClick={handleAccept}
+          className="bg-green-500 text-white p-2 rounded hover:bg-red-700"
+        >
+          Accept
+        </button>
+        <button
+          onClick={handleDecline}
+          className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+        >
+          Decline
+        </button>
       </div>
     </div>
   );

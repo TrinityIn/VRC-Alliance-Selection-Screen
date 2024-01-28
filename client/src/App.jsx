@@ -6,7 +6,7 @@ import Bracket from "./components/Bracket";
 
 function App() {
   const [animateRobot, setAnimateRobot] = useState(false);
-  const [selectedRobot, setSelectedRobot] = useState("210");
+  const [selectedRobot, setSelectedRobot] = useState("0");
   const [teamComponent, setTeamComponent] = useState([]);
   const [seeds, setSeeds] = useState([]);
   const [videoFound, setVideoFound] = useState(false);
