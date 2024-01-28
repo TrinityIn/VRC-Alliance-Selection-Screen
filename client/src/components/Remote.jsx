@@ -13,23 +13,19 @@ const Remote = () => {
   } = useContext(RobotContext);
 
   const handleStart = () => {
-    if (teams && seeds) {
-      const newSeeds = seeds.map((seed) => {
-        if (seed.id === 1) {
-          removeTeam(0);
-          alert("ROBOT");
-          return { ...seed, firstTeam: "ROBOT" };
-        }
-        return team;
-      });
-      setSeeds(newSeeds);
-    }
+    const newSeeds = seeds.map((seed) => {
+      if (seed.key === 1) {
+        return { ...seed, firstTeam: teams[0].number };
+      }
+      return seed;
+    });
+    removeTeam(0);
+    setSeeds(newSeeds);
   };
 
   const removeTeam = (index) => {
     const newTeams = [...teams];
-    newTeams.splice(index, 1); // Remove the item from the copied array
-    setTeams(newTeams); // Set the new array as the new state
+    setTeams(newTeams.slice(index + 1, teams.length));
   };
 
   const handleAccept = () => {

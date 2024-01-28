@@ -19,7 +19,7 @@ function Bracket() {
     const initialSeeds = [];
     for (let i = 1; i <= 16; i++) {
       initialSeeds.push({
-        id: i,
+        key: i,
         firstTeam: "",
         secondTeam: "",
       });
@@ -29,9 +29,9 @@ function Bracket() {
 
   useEffect(() => {
     const seedsComp = seeds.slice(0, 8).map((seed) => (
-      <div className="w-[200px] flex flex-row">
+      <div key={seed.key} className="w-[200px] flex flex-row">
         <div className="flex items-center justify-center bg-white w-[30px] text-xl text-black rounded-sm">
-          {seed.id}
+          {seed.key}
         </div>
         <div className="flex   bg-red-500 rounded-lg flex-col w-full justify-center items-center">
           <h1 className="text-white text-3xl">{seed.firstTeam}</h1>
@@ -44,9 +44,9 @@ function Bracket() {
       .slice(8)
       .reverse()
       .map((seed) => (
-        <div className="w-[200px] flex flex-row">
+        <div key={seed.key} className="w-[200px] flex flex-row">
           <div className="flex items-center justify-center bg-white w-[30px] text-xl text-black rounded-sm">
-            {seed.id}
+            {seed.key}
           </div>
           <div className="flex   bg-blue-500 rounded-lg flex-col w-full justify-center items-center">
             <h1 className="text-white text-3xl">{seed.firstTeam}</h1>
