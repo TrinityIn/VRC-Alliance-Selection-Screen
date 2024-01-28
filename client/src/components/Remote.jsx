@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import RobotContext from "../RobotContext";
 
 const Remote = () => {
@@ -12,20 +12,37 @@ const Remote = () => {
     setSeeds,
   } = useContext(RobotContext);
 
-  const handleStart = () => {
+  const [currentSeed, setCurrentSeed] = useState(1);
+
+  const newCaptain = () => {
     const newSeeds = seeds.map((seed) => {
-      if (seed.key === 1) {
+      if (seed.key === currentSeed && seed.firstTeam === "") {
         return { ...seed, firstTeam: teams[0].number };
       }
       return seed;
     });
     removeTeam(0);
     setSeeds(newSeeds);
+    setCurrentSeed((prevSeed) => prevSeed + 1);
+  };
+
+  const addTeamToSeed = (team) => {
+    let found = false;
+    const newSeeds = seeds.map((seed) => {
+      if (seed.secondTeam === "" && !found) {
+        found = true;
+        return { ...seed, secondTeam: team };
+      }
+      return seed;
+    });
+    setSeeds(newSeeds);
   };
 
   const removeTeam = (index) => {
     const newTeams = [...teams];
-    setTeams(newTeams.slice(index + 1, teams.length));
+    setTeams(
+      newTeams.slice(0, index).concat(newTeams.slice(index + 1, teams.length))
+    );
   };
 
   const handleAccept = () => {
@@ -35,8 +52,9 @@ const Remote = () => {
 
     if (index > -1) {
       if (!teams[index].cannotCaptain) {
+        setAnimateRobot(false);
+        addTeamToSeed(teams[index].number);
         removeTeam(index);
-        alert("success! removed " + selectedRobot);
       } else {
         alert("failed: " + selectedRobot);
       }
@@ -111,10 +129,10 @@ const Remote = () => {
             Decline
           </button>
           <button
-            onClick={handleStart}
+            onClick={newCaptain}
             className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
           >
-            Start
+            New Captain
           </button>
         </div>
       </div>
