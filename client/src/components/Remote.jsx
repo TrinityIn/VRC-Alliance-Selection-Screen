@@ -86,7 +86,7 @@ const Remote = () => {
         addTeamToSeed(teams[index].number);
         removeTeam(index);
       } else {
-        alert("failed: " + selectedRobot);
+        // alert("failed: " + selectedRobot);
       }
       setRequestedTeam(false);
     }
@@ -104,9 +104,9 @@ const Remote = () => {
         return team;
       });
       setTeams(newTeams); // Set the new array as the new state
-      alert("success! declined " + selectedRobot);
+      // alert("success! declined " + selectedRobot);
     } else {
-      alert("failed: " + selectedRobot);
+      // alert("failed: " + selectedRobot);
     }
     setRequestedTeam(false);
   };
