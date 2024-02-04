@@ -11,6 +11,52 @@ function App() {
   const [seeds, setSeeds] = useState([]);
   const [videoFound, setVideoFound] = useState(false);
 
+  const [rankings, setRankings] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const fetchRankings = async () => {
+    const eventId = 51496; // Example Event ID
+    const divisionId = 1; // Example Division ID
+    let allRankings = [];
+    let currentPage = 1;
+    const apiKey = "YOUR_AUTH_TOKEN"; // Replace with your actual token
+
+    try {
+      do {
+        const url = `https://www.robotevents.com/api/v2/events/${eventId}/divisions/${divisionId}/rankings?page=${currentPage}`;
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+            authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiZTY4Y2IzYTRlYzVkODU4Y2ZjZGZlYjEzY2Q4MjJjNzBjOGM2NzFkNGE5ODc1MDM2MWEwY2E1OTNjMGM5MDU5YmUyMDY0YjJkOWFkNDE3MWYiLCJpYXQiOjE3MDcwMjIxMDkuOTA3NTE0MSwibmJmIjoxNzA3MDIyMTA5LjkwNzUxNywiZXhwIjoyNjUzNzkzMzA5Ljg5NDQ4ODgsInN1YiI6Ijg3OTI1Iiwic2NvcGVzIjpbXX0.aDumHzVvXiAZywJj6RYU0Mvlag7TmeISHl6KUxfLylftaydHrz_EniS7bviymD5ea2QxKo3UKdU1eMVnmiuqrxl0o2o0ek7dYfxtjwIKd_mIN5Lmy2LXjvynNPMx_XhUJWkzm2-nyeOGtnquC4aNzq6jYzOXLMgWbPIWbnx6HY3Ip_EdXiPdGtafSjiENqE9yd46RWdWkVEwF960MIijzvG7wkHQXaaZBbvP3rDQgVP9GyORflDSD8a-citr2ETpx6SJMzt-FtwGfaYhmdooHDDaSzYWzKzFDzbzBC13jnfvZxiPWonyNZHnuCf9azr-xLpa8D4vTnS9RI8da6QEzQHweKvWbpugwhZyjtD0iqgckiB01P1LVUOf36bmOupvlbJqQg-YtLzke3mfBvvo6lT_x-3hE19j_Vrxn8BQQrhCZ43aFVAdJVcv9czhINzpW1nIWhKbwqpkbuXWdL51BEWkdb6CXYuIMPTZgDhJv8j-HVHZfIBYjKnVeGMBSqV0GnY5qTYVJq-r0qkl1--ATy4po8lNId7YSl44SYChG-9zrLQtOBDWUnUGNfTRZVxdi9gxq46R6GkkKX7SgVLdUn8QG0xEFsik60cnL1EL_RcBxjas2RTeoK1QhxM_IVPvNTwbBYUWHhfKxn4xLsQ3G4z1FGCbIoVdW8e8r9pHY_k`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            `Network response was not ok: ${response.statusText}`
+          );
+        }
+
+        const data = await response.json();
+        allRankings = allRankings.concat(data.data);
+        currentPage++; // Increment page number for next iteration
+        // console.log(allRankings + " " + currentPage);
+      } while (currentPage <= 5); // Continue until the last page
+      console.log(allRankings.reverse());
+      setRankings(allRankings.reverse());
+    } catch (error) {
+      setError(`Failed to fetch rankings: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRankings();
+  }, []);
+
   useEffect(() => {
     const videoExists = teams.some((team) => team.number === selectedRobot);
     setVideoFound(videoExists);
@@ -58,15 +104,18 @@ function App() {
   const [teams, setTeams] = useState(teamList);
 
   useEffect(() => {
-    const updatedTeamComponent = teams.map((team) => (
-      <div key={team.number}>
-        <h1
-          className={`${
-            team.cannotAccept ? "text-red-500" : "text-white"
-          } text-3xl py-3 px-3`}
-        >
-          {team.number}
-        </h1>
+    const updatedTeamComponent = rankings.map((team) => (
+      <div key={team.team.name}>
+        <div className="flex flex-row justify-center items-center">
+          <p className=" text-red-500 text-sm -mr-2">{team.rank}</p>
+          <h1
+            className={`${
+              team.cannotAccept ? "text-red-500" : "text-white"
+            } text-3xl py-3 px-3`}
+          >
+            {team.team.name}
+          </h1>
+        </div>
       </div>
     ));
     setTeamComponent(updatedTeamComponent);
