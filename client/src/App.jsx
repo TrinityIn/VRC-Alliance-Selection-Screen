@@ -107,9 +107,9 @@ function App() {
 
   useEffect(() => {
     const updatedTeamComponent = rankings.map((team) => (
-      <div key={team.team.name}>
+      <div key={team.team.name} className="mx-2 my-1">
         <div className="flex flex-row justify-center items-center">
-          <p className=" text-red-500 text-sm -mr-2">{team.rank}</p>
+          <p className=" text-red-500 text-lg -mr-2 font-bold">{team.rank}</p>
           <h1
             className={`${
               team.cannotAccept ? "text-red-500" : "text-white"
@@ -140,15 +140,15 @@ function App() {
         rankings,
       }}
     >
-      <div className="w-full h-screen items-center flex">
+      <div className="w-full h-screen items-center flex flex-col">
         <div className="h-[1080px] w-[3240px] flex bg-green-500 flex-row ">
           <div className="w-1/2 bg-gray-400 flex flex-row">
             <Bracket />
           </div>
           <div className="w-3/5 flex flex-col items-center ">
-            <div className="w-4/5 bg-blue-400 rounded-3xl h-[400px] my-10 "></div>
+            <div className="w-4/5 bg-green-500 rounded-3xl h-[400px] my-10 "></div>
             <div
-              className={`w-4/5 bg-gray-900 border border-white rounded-lg h-[550px] ${
+              className={`w-4/5 bg-gray-900 border-4 border-white rounded-lg h-[550px] ${
                 animateRobot ? "hidden" : ""
               } overflow-hidden`}
             >
@@ -177,7 +177,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="w-[300px] h-screen bg-red-700 flex overflow-hidden">
+        <div className="w-[300px] h-[900px] bg-red-700 flex overflow-hidden">
           <Remote />
         </div>
       </div>

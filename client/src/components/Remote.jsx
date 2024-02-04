@@ -122,7 +122,7 @@ const Remote = () => {
   };
 
   return (
-    <div className=" h-screen flex flex-col items-center justify-center bg-white">
+    <div className=" h-[500px] flex flex-col items-center justify-center bg-white">
       <div className="w-[300px] bg-white p-4 shadow-lg">
         <div className="mb-4">
           {/* todo: make this a dropdown */}
