@@ -59,12 +59,12 @@ function Bracket() {
   }, [seeds]);
 
   return (
-    <div className="flex flex-row w-full h-full items-center justify-between bg-black">
-      <div className="w-1/3 bg-black h-full flex flex-col justify-evenly items-center">
+    <div className="flex flex-row w-full h-full items-center justify-between bg-green-500">
+      <div className="w-1/3 bg-green-500 h-full flex flex-col justify-evenly items-center">
         {redComp}
       </div>
       <div className="w-[30px] h-full bg-white"></div>
-      <div className="w-1/3 bg-black h-full flex flex-col justify-evenly items-center">
+      <div className="w-1/3 bg-green-500 h-full flex flex-col justify-evenly items-center">
         {blueComp}
       </div>{" "}
     </div>

@@ -44,7 +44,7 @@ function App() {
         currentPage++; // Increment page number for next iteration
         // console.log(allRankings + " " + currentPage);
       } while (currentPage <= 5); // Continue until the last page
-      console.log(allRankings.reverse());
+      // console.log(allRankings.reverse());
       setRankings(allRankings.reverse());
     } catch (error) {
       setError(`Failed to fetch rankings: ${error.message}`);
@@ -58,7 +58,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const videoExists = teams.some((team) => team.number === selectedRobot);
+    const videoExists = rankings.some(
+      (team) => team.team.name === selectedRobot
+    );
     setVideoFound(videoExists);
   }, [selectedRobot]);
 
@@ -119,7 +121,7 @@ function App() {
       </div>
     ));
     setTeamComponent(updatedTeamComponent);
-  }, [teams]);
+  }, [rankings]);
 
   return (
     <RobotContext.Provider
@@ -129,19 +131,22 @@ function App() {
         selectedRobot,
         setSelectedRobot,
         teams,
+        rankings,
+        setRankings,
         setTeams,
         seeds,
         setSeeds,
         videoFound,
+        rankings,
       }}
     >
       <div className="w-full h-screen items-center flex">
-        <div className="h-[1080px] w-[1920px] flex bg-black flex-row ">
+        <div className="h-[1080px] w-[3240px] flex bg-green-500 flex-row ">
           <div className="w-1/2 bg-gray-400 flex flex-row">
             <Bracket />
           </div>
-          <div className="w-1/2 flex flex-col items-center ">
-            <div className="w-4/5 bg-green-500 rounded-3xl h-[400px] my-10 "></div>
+          <div className="w-3/5 flex flex-col items-center ">
+            <div className="w-4/5 bg-blue-400 rounded-3xl h-[400px] my-10 "></div>
             <div
               className={`w-4/5 bg-gray-900 border border-white rounded-lg h-[550px] ${
                 animateRobot ? "hidden" : ""

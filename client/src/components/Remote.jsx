@@ -8,6 +8,8 @@ const Remote = () => {
     teams,
     selectedRobot,
     setTeams,
+    rankings,
+    setRankings,
     seeds,
     setSeeds,
     videoFound,
@@ -17,12 +19,14 @@ const Remote = () => {
   const [requestedTeam, setRequestedTeam] = useState(false);
 
   const canSelect = (team) => {
-    const index = teams.findIndex((item) => item.number === team.toUpperCase());
+    const index = rankings.findIndex(
+      (item) => item.team.name === team.toUpperCase()
+    );
 
     if (index > -1) {
-      if (teams[index].cannotAccept) {
-        return false;
-      }
+      // if (rankings[index].cannotAccept) {
+      //   return false;
+      // }
       return true;
     }
   };
@@ -70,8 +74,14 @@ const Remote = () => {
 
   const removeTeam = (index) => {
     const newTeams = [...teams];
+    const newRankings = [...rankings];
     setTeams(
       newTeams.slice(0, index).concat(newTeams.slice(index + 1, teams.length))
+    );
+    setRankings(
+      newRankings
+        .slice(0, index)
+        .concat(newRankings.slice(index + 1, rankings.length))
     );
   };
 
