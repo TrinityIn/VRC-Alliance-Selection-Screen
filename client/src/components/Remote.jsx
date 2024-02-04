@@ -86,14 +86,15 @@ const Remote = () => {
   };
 
   const handleAccept = () => {
-    const index = teams.findIndex(
-      (item) => item.number === selectedRobot.toUpperCase()
+    const index = rankings.findIndex(
+      (item) => item.team.name === selectedRobot.toUpperCase()
     );
 
     if (index > -1) {
-      if (!teams[index].cannotAccept) {
+      console.log("CANNOT");
+      if (!rankings[index].cannotAccept) {
         setAnimateRobot(false);
-        addTeamToSeed(teams[index].number);
+        addTeamToSeed(rankings[index].team.name);
         removeTeam(index);
       } else {
         // alert("failed: " + selectedRobot);
@@ -103,20 +104,18 @@ const Remote = () => {
   };
 
   const handleDecline = () => {
-    const index = teams.findIndex(
-      (item) => item.number === selectedRobot.toUpperCase()
+    const index = rankings.findIndex(
+      (item) => item.team.name === selectedRobot.toUpperCase()
     );
     if (index > -1) {
-      const newTeams = teams.map((team) => {
-        if (team.number === selectedRobot.toUpperCase()) {
+      const newRankings = rankings.map((team) => {
+        if (team.team.name === selectedRobot.toUpperCase()) {
           return { ...team, cannotAccept: true };
         }
         return team;
       });
-      setTeams(newTeams); // Set the new array as the new state
-      // alert("success! declined " + selectedRobot);
+      setRankings(newRankings);
     } else {
-      // alert("failed: " + selectedRobot);
     }
     setRequestedTeam(false);
   };
