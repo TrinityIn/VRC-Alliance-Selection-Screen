@@ -146,7 +146,7 @@ function App() {
             <Bracket />
           </div>
           <div className="w-3/5 flex flex-col items-center ">
-            <div className="w-4/5 bg-blue-400 rounded-3xl h-[400px] my-10 "></div>
+            <div className="w-4/5 bg-green-500 rounded-3xl h-[400px] my-10 "></div>
             <div
               className={`w-4/5 bg-gray-900 border border-white rounded-lg h-[550px] ${
                 animateRobot ? "hidden" : ""
